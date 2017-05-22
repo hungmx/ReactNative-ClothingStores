@@ -49,17 +49,6 @@ class Shop extends Component {
                     >
                         <Home />
                     </TabNavigator.Item>
-                    <TabNavigator.Item
-                        selected={this.state.selectedTab === 'contact'}
-                        title="Contact"
-                        onPress={() => this.setState({ selectedTab: 'contact' })}
-                        renderIcon={() => <Image source={icContact} style={styles.iconStyle} />}
-                        renderSelectedIcon={() => <Image source={icContactS} style={styles.iconStyle} />}
-                        selectedTitleStyle={{ color: '#9fdcef' }}
-
-                    >
-                        <Contact />
-                    </TabNavigator.Item>
 
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'cart'}
@@ -84,6 +73,21 @@ class Shop extends Component {
                     >
                         <Search />
                     </TabNavigator.Item>
+                    <TabNavigator.Item
+                        selected={this.state.selectedTab === 'contact'}
+                        title="Contact"
+                        onPress={() => this.setState({ selectedTab: 'contact' })}
+                        renderIcon={() => <Image source={icContact} style={styles.iconStyle} />}
+                        renderSelectedIcon={() => <Image source={icContactS} style={styles.iconStyle} />}
+                        selectedTitleStyle={{ color: '#9fdcef' }}
+
+                    >
+                        <Contact />
+                    </TabNavigator.Item>
+
+
+
+
                 </TabNavigator>
             </View>
         );
