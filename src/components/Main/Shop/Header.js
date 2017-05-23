@@ -33,7 +33,7 @@ export default Header;
 const styles = StyleSheet.create({
     wrapper: { height: height / 8, backgroundColor: '#9fdcef', padding: 10, justifyContent: 'space-around'},
     row1: { flexDirection: 'row', justifyContent: 'space-between' },
-    input: { height: height / 18, backgroundColor: '#FFF', paddingLeft: 10 },
+    input: { height: height / 23, backgroundColor: '#FFF', paddingLeft: 10, paddingVertical: 0 },
     iconSyles: { width: 25, height: 25 },
     titleStyle: { color: '#FFF', fontSize: 18 }
 });

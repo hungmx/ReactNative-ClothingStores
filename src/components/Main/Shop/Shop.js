@@ -24,22 +24,36 @@ import icContactS from '../../../media/appIcon/contact.png';
 class Shop extends Component {
     constructor(props) {
         super(props);
-        this.state = { selectedTab: 'home' };
+        this.state = {
+            selectedTab: 'home',
+            types: []
+        };
     }
 
+    componentDidMount() {
+        fetch('http://192.168.1.19/api')
+            .then(res => res.json())
+            .then(resJSON => {
+                const { type } = resJSON;
+                this.setState({ types: type });
+            });
+    }
     openMenu() {
         //goi ham open o Main.js
         const open = this.props.open;
         open();
     }
+
+
     render() {
+        const { types, selectedTab } = this.state;
         return (
             //truyen ham openMenu sang
             <View style={{ flex: 1 }}>
                 <Header onOpen={this.openMenu.bind(this)} />
                 <TabNavigator>
                     <TabNavigator.Item
-                        selected={this.state.selectedTab === 'home'}
+                        selected={selectedTab === 'home'}
                         title="Home"
                         onPress={() => this.setState({ selectedTab: 'home' })}
                         renderIcon={() => <Image source={icHome} style={styles.iconStyle} />}
@@ -47,11 +61,11 @@ class Shop extends Component {
                         selectedTitleStyle={{ color: '#9fdcef' }}
                         badgeText="1"
                     >
-                        <Home />
+                        <Home types={types} />
                     </TabNavigator.Item>
 
                     <TabNavigator.Item
-                        selected={this.state.selectedTab === 'cart'}
+                        selected={selectedTab === 'cart'}
                         title="Cart"
                         onPress={() => this.setState({ selectedTab: 'cart' })}
                         renderIcon={() => <Image source={icCart} style={styles.iconStyle} />}
@@ -63,7 +77,7 @@ class Shop extends Component {
                     </TabNavigator.Item>
 
                     <TabNavigator.Item
-                        selected={this.state.selectedTab === 'search'}
+                        selected={selectedTab === 'search'}
                         title="Search"
                         onPress={() => this.setState({ selectedTab: 'search' })}
                         renderIcon={() => <Image source={icSearch} style={styles.iconStyle} />}

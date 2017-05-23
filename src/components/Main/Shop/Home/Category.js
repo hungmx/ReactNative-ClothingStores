@@ -7,6 +7,7 @@ import maxiIcon from '../../../../media/temp/maxi.jpg';
 import partyIcon from '../../../../media/temp/party.jpg';
 
 const { height, width } = Dimensions.get('window');
+const url = 'http://192.168.1.19/api/images/type/';
 class Category extends Component {
 
     gotoListProduct() {
@@ -14,6 +15,7 @@ class Category extends Component {
         navigator.push({ name: 'LIST_PRODUCT' });
     }
     render() {
+        const { types } = this.props;
         return (
             <View style={styles.wrapper}>
                 <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -21,24 +23,17 @@ class Category extends Component {
                 </View>
                 <View style={{ flex: 4 }}>
                     <Swiper width={imageWith} height={imageHeight} >
-                        <TouchableOpacity onPress={() => { this.gotoListProduct(); }}>
-                            <Image source={litteIcon} style={styles.imageStyles} >
-                                <Text style={styles.cateTitle}>Maxi Dress</Text>
-                            </Image>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { this.gotoListProduct(); }}>
-                            <Image source={maxiIcon} style={styles.imageStyles} >
-                                <Text style={styles.cateTitle}>Maxi Dress</Text>
-                            </Image>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { this.gotoListProduct(); }}>
-                            <Image source={partyIcon} style={styles.imageStyles} >
-                                <Text style={styles.cateTitle}>Maxi Dress</Text>
-                            </Image>
-                        </TouchableOpacity>
+                        {types.map(e => (
+                            <TouchableOpacity onPress={() => { this.gotoListProduct(); }} key={e.id}>
+                                <Image source={{ uri: '' + e.image }} style={styles.imageStyles} >
+                                    <Text style={styles.cateTitle}>{e.name}</Text>
+                                </Image>
+                            </TouchableOpacity>
+                        ))}
+
                     </Swiper>
                 </View>
-            </View>
+            </View >
         );
     }
 }
