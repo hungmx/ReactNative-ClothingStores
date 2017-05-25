@@ -25,7 +25,7 @@ class Category extends Component {
                     <Swiper width={imageWith} height={imageHeight} >
                         {types.map(e => (
                             <TouchableOpacity onPress={() => { this.gotoListProduct(); }} key={e.id}>
-                                <Image source={{ uri: '' + e.image }} style={styles.imageStyles} >
+                                <Image source={{ uri: `${url}${e.image}` }} style={styles.imageStyles} >
                                     <Text style={styles.cateTitle}>{e.name}</Text>
                                 </Image>
                             </TouchableOpacity>

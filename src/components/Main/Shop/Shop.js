@@ -18,6 +18,7 @@ import icSearchS from '../../../media/appIcon/search.png';
 import icContact from '../../../media/appIcon/contact0.png';
 import icContactS from '../../../media/appIcon/contact.png';
 
+import golobal from '../../../components/global';
 
 
 //ccs
@@ -26,18 +27,29 @@ class Shop extends Component {
         super(props);
         this.state = {
             selectedTab: 'home',
-            types: []
+            types: [],
+            topProduct: [],
+            cartArray: []
         };
+        golobal.addProductToCart = this.addProductToCart.bind(this);
     }
+
 
     componentDidMount() {
         fetch('http://192.168.1.19/api')
             .then(res => res.json())
             .then(resJSON => {
-                const { type } = resJSON;
-                this.setState({ types: type });
+                const { type, product } = resJSON;
+                this.setState({ types: type, topProduct: product });
             });
     }
+
+    addProductToCart(product) {
+        this.setState({ cartArray: this.state.cartArray.concat({ product: product, quantify: 1 }) });
+        console.log(this.state.cartArray);
+
+    }
+
     openMenu() {
         //goi ham open o Main.js
         const open = this.props.open;
@@ -46,7 +58,9 @@ class Shop extends Component {
 
 
     render() {
-        const { types, selectedTab } = this.state;
+        //khai bao rut gon ten this.state...
+        const { types, selectedTab, topProduct, cartArray } = this.state;
+
         return (
             //truyen ham openMenu sang
             <View style={{ flex: 1 }}>
@@ -59,9 +73,9 @@ class Shop extends Component {
                         renderIcon={() => <Image source={icHome} style={styles.iconStyle} />}
                         renderSelectedIcon={() => <Image source={icHomeS} style={styles.iconStyle} />}
                         selectedTitleStyle={{ color: '#9fdcef' }}
-                        badgeText="1"
+
                     >
-                        <Home types={types} />
+                        <Home types={types} topProduct={topProduct} />
                     </TabNavigator.Item>
 
                     <TabNavigator.Item
@@ -71,9 +85,9 @@ class Shop extends Component {
                         renderIcon={() => <Image source={icCart} style={styles.iconStyle} />}
                         renderSelectedIcon={() => <Image source={icCartS} style={styles.iconStyle} />}
                         selectedTitleStyle={{ color: '#9fdcef' }}
-
+                        badgeText={cartArray.length}
                     >
-                        <Cart />
+                        <Cart cartArray={cartArray} />
                     </TabNavigator.Item>
 
                     <TabNavigator.Item
