@@ -19,7 +19,9 @@ import icContact from '../../../media/appIcon/contact0.png';
 import icContactS from '../../../media/appIcon/contact.png';
 
 import golobal from '../../../components/global';
-
+import initData from '../../../api/initData';
+import saveCart from '../../../api/saveCart';
+import getCart from '../../../api/getCart';
 
 //ccs
 class Shop extends Component {
@@ -36,18 +38,20 @@ class Shop extends Component {
 
 
     componentDidMount() {
-        fetch('http://192.168.1.19/api')
-            .then(res => res.json())
+        initData()
             .then(resJSON => {
                 const { type, product } = resJSON;
                 this.setState({ types: type, topProduct: product });
             });
+        //khi vua khoi dong get cart ve
+        getCart()
+            .then(cartArray => this.setState({ cartArray: cartArray }));
     }
 
     addProductToCart(product) {
-        this.setState({ cartArray: this.state.cartArray.concat({ product: product, quantify: 1 }) });
-        console.log(this.state.cartArray);
-
+        this.setState({ cartArray: this.state.cartArray.concat({ product: product, quantify: 1 }) },
+            () => saveCart(this.state.cartArray));
+        //khi thay doi se luu cart
     }
 
     openMenu() {
