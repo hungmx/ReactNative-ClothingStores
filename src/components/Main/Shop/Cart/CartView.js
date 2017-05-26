@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 
 import sp1 from '../../.././../media/temp/sp1.jpeg';
+import global from '../../../global';
 
 function toTitleCase(str) {
     return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
@@ -16,6 +17,18 @@ class CartView extends Component {
         const { navigator } = this.props;
         navigator.push({ name: 'PRODUCT_DETAIL' });
     }
+
+    incrQuantity(id) {
+        global.incrQuantity(id);
+    }
+
+    decrQuantity(id) {
+        global.decrQuantity(id);
+    }
+
+    removeProduct(id) {
+        global.removeProduct(id);
+    }
     render() {
         const { main, checkoutButton, checkoutTitle, wrapper,
             product, mainRight, productController,
@@ -23,6 +36,11 @@ class CartView extends Component {
             txtShowDetail, showDetailContainer } = styles;
 
         const { cartArray } = this.props;
+        //tinh tong
+        const arrTotal = cartArray.map(e => e.product.price * e.quantify);
+        //reduce de tinh tong gia tri
+        const total = arrTotal.length ? arrTotal.reduce((a, b) => a + b) : 0;
+
         return (
             <View style={wrapper}>
                 <ListView
@@ -36,7 +54,7 @@ class CartView extends Component {
                             <View style={[mainRight]}>
                                 <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
                                     <Text style={txtName}>{toTitleCase(cartProduct.product.name)}</Text>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { this.removeProduct(cartProduct.product.id); }}>
                                         <Text style={{ fontFamily: 'Avenir', color: '#969696' }}>X</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -45,11 +63,11 @@ class CartView extends Component {
                                 </View>
                                 <View style={productController}>
                                     <View style={numberOfProduct}>
-                                        <TouchableOpacity>
+                                        <TouchableOpacity onPress={() => { this.incrQuantity(cartProduct.product.id); }}>
                                             <Text>+</Text>
                                         </TouchableOpacity>
                                         <Text>{cartProduct.quantify}</Text>
-                                        <TouchableOpacity>
+                                        <TouchableOpacity onPress={() => { this.decrQuantity(cartProduct.product.id); }}>
                                             <Text>-</Text>
                                         </TouchableOpacity>
                                     </View>
@@ -63,7 +81,7 @@ class CartView extends Component {
 
                 />
                 <TouchableOpacity style={checkoutButton}>
-                    <Text style={checkoutTitle}>TOTAL {1000}$ CHECKOUT NOW</Text>
+                    <Text style={checkoutTitle}>TOTAL {total}$ CHECKOUT NOW</Text>
                 </TouchableOpacity>
             </View>
         );

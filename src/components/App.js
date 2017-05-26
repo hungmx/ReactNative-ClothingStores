@@ -14,10 +14,10 @@ export default class App extends React.Component {
       initialRoute={{ name: 'MAIN' }}
       renderScene={(route, navigator) => {
         switch (route.name) {
-          case 'MAIN': return <Main navigator={navigator} />
-          case 'CHANGE_INFO': return <ChangeInfo navigator={navigator} />
-          case 'AUTHENTICATION': return <Authentication navigator={navigator} />
-          default: return <OrderHistory navigator={navigator} />
+          case 'MAIN': return <Main navigator={navigator} />;
+          case 'CHANGE_INFO': return <ChangeInfo navigator={navigator} />;
+          case 'AUTHENTICATION': return <Authentication navigator={navigator} />;
+          default: return <OrderHistory navigator={navigator} />;
         }
       }}
 

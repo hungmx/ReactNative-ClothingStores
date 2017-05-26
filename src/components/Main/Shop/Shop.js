@@ -18,7 +18,7 @@ import icSearchS from '../../../media/appIcon/search.png';
 import icContact from '../../../media/appIcon/contact0.png';
 import icContactS from '../../../media/appIcon/contact.png';
 
-import golobal from '../../../components/global';
+import global from '../../../components/global';
 import initData from '../../../api/initData';
 import saveCart from '../../../api/saveCart';
 import getCart from '../../../api/getCart';
@@ -33,7 +33,11 @@ class Shop extends Component {
             topProduct: [],
             cartArray: []
         };
-        golobal.addProductToCart = this.addProductToCart.bind(this);
+        //gan' ham trung gian
+        global.addProductToCart = this.addProductToCart.bind(this);
+        global.incrQuantity = this.incrQuantity.bind(this);
+        global.decrQuantity = this.decrQuantity.bind(this);
+        global.removeProduct = this.removeProduct.bind(this);
     }
 
 
@@ -52,6 +56,32 @@ class Shop extends Component {
         this.setState({ cartArray: this.state.cartArray.concat({ product: product, quantify: 1 }) },
             () => saveCart(this.state.cartArray));
         //khi thay doi se luu cart
+    }
+
+    incrQuantity(productId) {
+        //phan tu vao trong mang nay co product.id == product id 
+        const newCart = this.state.cartArray.map(e => {
+            //neu khac productId se tra ve chinh no, con khong se~ tang quantity len 1
+            if (e.product.id !== productId) return e;
+            return { product: e.product, quantify: e.quantify + 1 };
+        });
+        this.setState({ cartArray: newCart }, () => saveCart(this.state.cartArray));
+    }
+
+    decrQuantity(productId) {
+        //phan tu vao trong mang nay co product.id == product id 
+        const newCart = this.state.cartArray.map(e => {
+            if (e.product.id !== productId) return e;
+            return { product: e.product, quantify: e.quantify - 1 };
+        });
+
+        this.setState({ cartArray: newCart }, () => saveCart(this.state.cartArray));
+    }
+
+    removeProduct(productId) {
+        //dung ham filter de loc nhung phan tu khac id , con giong thi se xoa trong mang
+        const newCart = this.state.cartArray.filter(e => e.product.id !== productId);
+        this.setState({ cartArray: newCart }, () => saveCart(this.state.cartArray));
     }
 
     openMenu() {

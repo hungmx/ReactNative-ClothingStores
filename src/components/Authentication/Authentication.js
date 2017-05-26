@@ -16,17 +16,19 @@ import {
 import icBack from '../../media/appIcon/back_white.png';
 import icLogo from '../../media/appIcon/ic_logo.png';
 
+
+import SignIn from './SignIn';
+import SignUp from './SignUp';
+
 const { height, width } = Dimensions.get('window');
+
 export default class Authentication extends Component {
 
   constructor(props) {
     super(props);
     this.state = { isLogin: true };
   }
-  goBackToMain() {
-    const { navigator } = this.props;
-    navigator.pop();
-  }
+
 
   setSignIn() {
     this.setState({ isLogin: true });
@@ -36,30 +38,12 @@ export default class Authentication extends Component {
     this.setState({ isLogin: false });
   }
 
+  goBackToMain() {
+    const { navigator } = this.props;
+    navigator.pop();
+  }
   render() {
-    const signInJSX = (
-      <View>
-        <TextInput style={styles.textInputStyle} placeholder="Enter your email" underlineColorAndroid='transparent'></TextInput>
-        <TextInput style={styles.textInputStyle} placeholder="Enter your password" underlineColorAndroid='transparent'></TextInput>
-        <TouchableOpacity style={styles.signInNowStyle}>
-          <Text style={styles.textSigninNow}>SIGN IN NOW</Text>
-        </TouchableOpacity>
-      </View>
-
-    );
-    const signUpJSX = (
-      <View>
-        <TextInput style={styles.textInputStyle} placeholder="Enter your name" underlineColorAndroid='transparent'></TextInput>
-        <TextInput style={styles.textInputStyle} placeholder="Enter your email" underlineColorAndroid='transparent'></TextInput>
-        <TextInput style={styles.textInputStyle} placeholder="Enter your password" underlineColorAndroid='transparent'></TextInput>
-        <TextInput style={styles.textInputStyle} placeholder="Re-enter your password" underlineColorAndroid='transparent'></TextInput>
-        <TouchableOpacity style={styles.signInNowStyle}>
-          <Text style={styles.textSigninNow}>SIGN UP NOW</Text>
-        </TouchableOpacity>
-      </View>
-    );
-
-    const checklogin = this.state.isLogin ? signInJSX : signUpJSX;
+    const checklogin = this.state.isLogin ? <SignIn /> : <SignUp />;
 
     return (
       <View style={styles.container}>
