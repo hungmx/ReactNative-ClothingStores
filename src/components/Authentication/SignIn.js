@@ -1,13 +1,70 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import { View, Text, Alert, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import login from '../../api/login';
+import global from '../../components/global';
 
 class SignIn extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: ''
+        };
+    }
+
+    signIn() {
+        const { email, password } = this.state;
+        login(email, password)
+            .then(res => {
+                //truyen user va goback ve main
+                global.onSignIn(res.user);
+                this.onSuccess();
+            })
+            .catch(error => this.onFail());
+    }
+
+    onSuccess() {
+        Alert.alert(
+            'Notice',
+            'Sign in successfully',
+
+            [   
+                { text: 'OK', onPress: () => { this.props.goBackToMain(); } },
+            ],
+            { cancelable: false }
+        );
+    }
+
+    onFail() {
+        Alert.alert(
+            'Notice',
+            'Login Fail',
+            [
+                { text: 'OK' },
+            ],
+            { cancelable: false }
+        );
+    }
+
     render() {
         return (
             <View>
-                <TextInput style={styles.textInputStyle} placeholder="Enter your email" underlineColorAndroid='transparent'></TextInput>
-                <TextInput style={styles.textInputStyle} placeholder="Enter your password" underlineColorAndroid='transparent'></TextInput>
-                <TouchableOpacity style={styles.signInNowStyle}>
+                <TextInput
+                    style={styles.textInputStyle}
+                    placeholder="Enter your email"
+                    underlineColorAndroid='transparent'
+                    value={this.state.email}
+                    onChangeText={text => this.setState({ email: text })}
+                ></TextInput>
+                <TextInput
+                    style={styles.textInputStyle}
+                    placeholder="Enter your password"
+                    underlineColorAndroid='transparent'
+                    secureTextEntry
+                    value={this.state.password}
+                    onChangeText={text => this.setState({ password: text })}
+                ></TextInput>
+                <TouchableOpacity style={styles.signInNowStyle} onPress={() => { this.signIn(); }}>
                     <Text style={styles.textSigninNow}>SIGN IN NOW</Text>
                 </TouchableOpacity>
             </View>

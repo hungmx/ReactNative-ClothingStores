@@ -29,8 +29,8 @@ class SignUp extends Component {
             'Notice',
             'Sign up successfully',
 
-            [
-                { text: 'OK', onPress: () => console.log('OK Pressed') },
+            [   //thanh cong se goi ham signin tu Authenti truyen sang
+                { text: 'OK', onPress: () => { this.props.onSignIn(); } },
             ],
             { cancelable: false }
         );

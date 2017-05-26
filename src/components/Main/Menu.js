@@ -4,13 +4,18 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 import profileIcon from '../../media/temp/profile.png';
-
+import global from '../../components/global';
 //ccs
 class Menu extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { isLogin: false };
+        this.state = { user: null };
+        global.onSignIn = this.onSignIn.bind(this);
+    }
+
+    onSignIn(user) {
+        this.setState({ user: user });
     }
     gotoAuthentication() {
         const { navigator } = this.props;
@@ -26,6 +31,7 @@ class Menu extends Component {
     }
 
     render() {
+        const { user } = this.state;
         const logoutJSX = (
             <View style={{ flex: 1 }}>
                 <TouchableOpacity style={styles.btStyle}>
@@ -35,7 +41,7 @@ class Menu extends Component {
         );
         const loginJSX = (
             <View style={{ flex: 1, alignItems: 'center' }}>
-                <Text style={styles.styleName}>Mai Xuan Hung</Text>
+                <Text style={styles.styleName}>{user ? user.name : ''}</Text>
                 <View>
                     <TouchableOpacity style={styles.btSign} onPress={this.gotoOrderHistory.bind(this)}>
                         <Text>Order History</Text>
@@ -50,7 +56,7 @@ class Menu extends Component {
             </View>
         );
 
-        const mainJSX = this.state.isLogin ? loginJSX : logoutJSX;
+        const mainJSX = this.state.user ? loginJSX : logoutJSX;
         return (
             <View style={styles.container}>
                 <Image source={profileIcon} style={styles.imageStyle} />

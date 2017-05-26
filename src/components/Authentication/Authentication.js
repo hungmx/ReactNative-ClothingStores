@@ -43,12 +43,12 @@ export default class Authentication extends Component {
     navigator.pop();
   }
   render() {
-    const checklogin = this.state.isLogin ? <SignIn /> : <SignUp />;
+    const checklogin = this.state.isLogin ? <SignIn goBackToMain={this.goBackToMain.bind(this)} /> : <SignUp onSignIn={this.setSignIn.bind(this)} />;
 
     return (
       <View style={styles.container}>
         <View style={styles.row1} >
-          <TouchableOpacity onPress={this.props.onOpen}>
+          <TouchableOpacity onPress={() => { this.goBackToMain(); }}>
             <Image source={icBack} style={styles.iconSyles} />
           </TouchableOpacity>
           <Text style={styles.titleStyle}>Wearing a Dress</Text>

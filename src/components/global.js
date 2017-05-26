@@ -3,4 +3,6 @@ module.exports = {
     incrQuantity: null,
     decrQuantity: null,
     removeProduct: null,
+    //bien check login chua
+    onSignIn: null,
 };
