@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, Alert, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import login from '../../api/login';
 import global from '../../components/global';
+import saveToken from '../../api/saveToken';
+import getToken from '../../api/getToken';
 
 class SignIn extends Component {
     constructor(props) {
@@ -12,12 +14,14 @@ class SignIn extends Component {
         };
     }
 
+   
     signIn() {
         const { email, password } = this.state;
         login(email, password)
             .then(res => {
                 //truyen user va goback ve main
                 global.onSignIn(res.user);
+                saveToken(res.token);
                 this.onSuccess();
             })
             .catch(error => this.onFail());
@@ -28,7 +32,7 @@ class SignIn extends Component {
             'Notice',
             'Sign in successfully',
 
-            [   
+            [
                 { text: 'OK', onPress: () => { this.props.goBackToMain(); } },
             ],
             { cancelable: false }
