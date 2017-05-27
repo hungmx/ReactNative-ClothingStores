@@ -16,22 +16,25 @@ class Category extends Component {
     }
     render() {
         const { types } = this.props;
+        const swiper = (
+            <Swiper width={imageWith} height={imageHeight} >
+                {types.map(e => (
+                    <TouchableOpacity onPress={() => { this.gotoListProduct(); }} key={e.id}>
+                        <Image source={{ uri: `${url}${e.image}` }} style={styles.imageStyles} >
+                            <Text style={styles.cateTitle}>{e.name}</Text>
+                        </Image>
+                    </TouchableOpacity>
+                ))}
+
+            </Swiper>
+        );
         return (
             <View style={styles.wrapper}>
                 <View style={{ flex: 1, justifyContent: 'center' }}>
                     <Text style={styles.textStyle}>LIST OF CATEGORY</Text>
                 </View>
                 <View style={{ flex: 4 }}>
-                    <Swiper width={imageWith} height={imageHeight} >
-                        {types.map(e => (
-                            <TouchableOpacity onPress={() => { this.gotoListProduct(); }} key={e.id}>
-                                <Image source={{ uri: `${url}${e.image}` }} style={styles.imageStyles} >
-                                    <Text style={styles.cateTitle}>{e.name}</Text>
-                                </Image>
-                            </TouchableOpacity>
-                        ))}
-
-                    </Swiper>
+                    {types.length ? swiper : null}
                 </View>
             </View >
         );

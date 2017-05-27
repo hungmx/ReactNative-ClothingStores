@@ -11,22 +11,23 @@ export default class App extends React.Component {
   render() {
     return (
       <NavigationExperimental.Navigator
-      initialRoute={{ name: 'MAIN' }}
-      renderScene={(route, navigator) => {
-        switch (route.name) {
-          case 'MAIN': return <Main navigator={navigator} />;
-          case 'CHANGE_INFO': return <ChangeInfo navigator={navigator} />;
-          case 'AUTHENTICATION': return <Authentication navigator={navigator} />;
-          default: return <OrderHistory navigator={navigator} />;
-        }
-      }}
+        initialRoute={{ name: 'MAIN' }}
+        renderScene={(route, navigator) => {
+          switch (route.name) {
+            case 'MAIN': return <Main navigator={navigator} />;
+            //lay user duoc truyen quan navigator = cach goi route.user
+            case 'CHANGE_INFO': return <ChangeInfo navigator={navigator} user={route.user} />;
+            case 'AUTHENTICATION': return <Authentication navigator={navigator} />;
+            default: return <OrderHistory navigator={navigator} />;
+          }
+        }}
 
-      configureScene={route => {
-        if (route.name === 'AUTHENTICATION') {
-        return NavigationExperimental.Navigator.SceneConfigs.FloatFromRight;
-        }
-        return NavigationExperimental.Navigator.SceneConfigs.FloatFromLeft;
-      }}
+        configureScene={route => {
+          if (route.name === 'AUTHENTICATION') {
+            return NavigationExperimental.Navigator.SceneConfigs.FloatFromRight;
+          }
+          return NavigationExperimental.Navigator.SceneConfigs.FloatFromLeft;
+        }}
 
       />
     );

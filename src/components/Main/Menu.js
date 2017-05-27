@@ -24,7 +24,7 @@ class Menu extends Component {
     }
     gotoChangeInfo() {
         const { navigator } = this.props;
-        navigator.push({ name: 'CHANGE_INFO' });
+        navigator.push({ name: 'CHANGE_INFO', user: this.state.user });
     }
     gotoOrderHistory() {
         const { navigator } = this.props;
@@ -32,7 +32,7 @@ class Menu extends Component {
     }
 
     onSignOut() {
-        this.setState({ user: '' });
+        this.setState({ user: null });
         //xoa token da luu
         saveToken('');
     }

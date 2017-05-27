@@ -18,6 +18,7 @@ import Drawer from 'react-native-drawer';
 
 import checkLogin from '../../api/checkLogin';
 import getToken from '../../api/getToken';
+import refreshToken from '../../api/refreshToken';
 import global from '../global';
 
 export default class Main extends Component {
@@ -28,6 +29,11 @@ export default class Main extends Component {
       //check login thanh cong thi se xet lai ham onSignin
       .then(res => global.onSignIn(res.user))
       .catch(err => console.log(err));
+
+      // setInterval(() => {
+      //   getToken()
+      //   .then(token => refreshToken(token));
+      // }, 60 * 1000);
   }
   gotoAuthentication() {
     const { navigator } = this.props;
