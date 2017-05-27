@@ -5,6 +5,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 import profileIcon from '../../media/temp/profile.png';
 import global from '../../components/global';
+import saveToken from '../../api/saveToken';
 //ccs
 class Menu extends Component {
 
@@ -30,6 +31,11 @@ class Menu extends Component {
         navigator.push({ name: 'ORDER_HISTORY' });
     }
 
+    onSignOut() {
+        this.setState({ user: '' });
+        //xoa token da luu
+        saveToken('');
+    }
     render() {
         const { user } = this.state;
         const logoutJSX = (
@@ -49,7 +55,7 @@ class Menu extends Component {
                     <TouchableOpacity style={styles.btSign} onPress={this.gotoChangeInfo.bind(this)}>
                         <Text>Change Info</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btSign} onPress={this.gotoAuthentication.bind(this)}>
+                    <TouchableOpacity style={styles.btSign} onPress={() => { this.onSignOut(); }}>
                         <Text>Sign out</Text>
                     </TouchableOpacity>
                 </View>
