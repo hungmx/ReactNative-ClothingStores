@@ -17,13 +17,16 @@ import Shop from './Shop/Shop';
 import Drawer from 'react-native-drawer';
 
 import checkLogin from '../../api/checkLogin';
+import getToken from '../../api/getToken';
+import global from '../global';
 
-const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh1bmcxMjNAZ21haWwuY29tIiwiaWF0IjoxNDk1ODcxNDYzLCJleHBpcmUiOjE0OTYwNDQyNjN9.k8YvIpM1usmHYGBbaKnRZt-boFRjPTrnucRCIGsj8Tw';
 export default class Main extends Component {
 
   componentDidMount() {
-    checkLogin(token)
-      .then(res => console.log(res))
+    getToken()
+      .then(token => checkLogin(token))
+      //check login thanh cong thi se xet lai ham onSignin
+      .then(res => global.onSignIn(res.user))
       .catch(err => console.log(err));
   }
   gotoAuthentication() {
