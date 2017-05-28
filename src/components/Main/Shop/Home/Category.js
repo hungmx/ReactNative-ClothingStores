@@ -10,16 +10,16 @@ const { height, width } = Dimensions.get('window');
 const url = 'http://192.168.1.19/api/images/type/';
 class Category extends Component {
 
-    gotoListProduct() {
+    gotoListProduct(category) {
         const { navigator } = this.props;
-        navigator.push({ name: 'LIST_PRODUCT' });
+        navigator.push({ name: 'LIST_PRODUCT', category: category });
     }
     render() {
         const { types } = this.props;
         const swiper = (
             <Swiper width={imageWith} height={imageHeight} >
                 {types.map(e => (
-                    <TouchableOpacity onPress={() => { this.gotoListProduct(); }} key={e.id}>
+                    <TouchableOpacity onPress={() => { this.gotoListProduct(e); }} key={e.id}>
                         <Image source={{ uri: `${url}${e.image}` }} style={styles.imageStyles} >
                             <Text style={styles.cateTitle}>{e.name}</Text>
                         </Image>
