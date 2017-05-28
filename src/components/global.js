@@ -5,4 +5,7 @@ module.exports = {
     removeProduct: null,
     //bien check login chua
     onSignIn: null,
+
+    gotoSearch: null,
+    setSearchArray: null
 };

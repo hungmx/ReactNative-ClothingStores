@@ -36,9 +36,9 @@ class ListProduct extends Component {
         navigator.pop();
     }
 
-    gotoDetail() {
+    gotoDetail(product) {
         const { navigator } = this.props;
-        navigator.push({ name: 'PRODUCT_DETAIL' });
+        navigator.push({ name: 'PRODUCT_DETAIL', product: product });
     }
 
     render() {
@@ -72,7 +72,7 @@ class ListProduct extends Component {
                                             width: 15,
                                             borderRadius: 8
                                         }} />
-                                        <TouchableOpacity>
+                                        <TouchableOpacity onPress={() => this.gotoDetail(product)}>
                                             <Text style={styles.text5}>SHOW DETAIL</Text>
                                         </TouchableOpacity>
                                     </View>

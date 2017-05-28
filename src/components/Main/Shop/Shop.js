@@ -38,6 +38,7 @@ class Shop extends Component {
         global.incrQuantity = this.incrQuantity.bind(this);
         global.decrQuantity = this.decrQuantity.bind(this);
         global.removeProduct = this.removeProduct.bind(this);
+        global.gotoSearch = this.gotoSearch.bind(this);
     }
 
 
@@ -82,6 +83,10 @@ class Shop extends Component {
         //dung ham filter de loc nhung phan tu khac id , con giong thi se xoa trong mang
         const newCart = this.state.cartArray.filter(e => e.product.id !== productId);
         this.setState({ cartArray: newCart }, () => saveCart(this.state.cartArray));
+    }
+
+    gotoSearch() {
+        this.setState({ selectedTab: 'search' });
     }
 
     openMenu() {
